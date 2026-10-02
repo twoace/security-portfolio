@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getPublished } from '../../lib';
+
+const entries = await getPublished('projects');
+---
+<Base title="Projekte">
+  <h1>Projekte</h1>
+  <p class="muted">Eigene Projekte: Homelab, Skripte, Tools und Analysen.</p>
+  {entries.length === 0 ? <p>Noch nichts hier.</p> : (
+    <ul class="card-list">{entries.map((e) => <EntryCard entry={e} />)}</ul>
+  )}
+</Base>

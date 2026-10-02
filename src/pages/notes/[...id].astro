@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Entry from '../../layouts/Entry.astro';
+import { getPublished } from '../../lib';
+
+export const getStaticPaths = (async () => {
+  const entries = await getPublished('notes');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Entry entry={entry}>
+  <Content />
+</Entry>

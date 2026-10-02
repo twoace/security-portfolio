@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getPublished } from '../../lib';
+
+const entries = await getPublished('writeups');
+---
+<Base title="Writeups">
+  <h1>Writeups</h1>
+  <p class="muted">Lösungswege zu TryHackMe-Räumen und CTFs: was ich ausprobiert habe, was funktioniert hat und was ich dabei gelernt habe.</p>
+  {entries.length === 0 ? <p>Noch nichts hier.</p> : (
+    <ul class="card-list">{entries.map((e) => <EntryCard entry={e} />)}</ul>
+  )}
+</Base>

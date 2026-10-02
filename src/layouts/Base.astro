@@ -1,0 +1,57 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import { url } from '../lib';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Mein Weg in die Cybersecurity: Writeups, Projekte und Lernnotizen.' } = Astro.props;
+const siteName = 'security-portfolio';
+const path = Astro.url.pathname;
+
+const links = [
+  { href: url('writeups/'), label: 'writeups' },
+  { href: url('projects/'), label: 'projekte' },
+  { href: url('notes/'), label: 'notizen' },
+  { href: url('about/'), label: 'über mich' },
+];
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href={url('rss.xml')} />
+    <ClientRouter />
+    <title>{title === siteName ? title : `${title} · ${siteName}`}</title>
+  </head>
+  <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <header class="site">
+      <div class="container">
+        <a class="logo" href={url('/')}>whoami</a>
+        <nav>
+          {links.map((l) => (
+            <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main class="container" transition:animate="slide">
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="container">
+        © {new Date().getFullYear()} · gebaut mit Astro · <a href={url('rss.xml')}>RSS</a>
+      </div>
+    </footer>
+    <script>import '../scripts/effects.ts';</script>
+  </body>
+</html>

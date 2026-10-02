@@ -1,0 +1,33 @@
+---
+import Base from './Base.astro';
+import Tags from '../components/Tags.astro';
+import { formatDate, kindLabel, url, type AnyEntry } from '../lib';
+
+interface Props { entry: AnyEntry }
+const { entry } = Astro.props;
+const { data } = entry;
+---
+<Base title={data.title} description={data.description}>
+  <article>
+    <p class="meta">
+      <a href={url(`${entry.collection}/`)}>← {kindLabel[entry.collection]}s</a>
+      <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+      {'platform' in data && <span>{data.platform}</span>}
+      {'difficulty' in data && data.difficulty && <span>Schwierigkeit: {data.difficulty}</span>}
+      {'status' in data && <span>Status: {data.status}</span>}
+      {'source' in data && data.source && <span>Quelle: {data.source}</span>}
+    </p>
+    <h1 transition:name={`title-${entry.collection}-${entry.id}`}>{data.title}</h1>
+    <p class="muted">{data.description}</p>
+    {'roomUrl' in data && data.roomUrl && (
+      <p class="mono">Raum: <a href={data.roomUrl} rel="noopener noreferrer" target="_blank">{data.roomUrl}</a></p>
+    )}
+    {'repo' in data && data.repo && (
+      <p class="mono">Code: <a href={data.repo} rel="noopener noreferrer" target="_blank">{data.repo}</a></p>
+    )}
+    {'stack' in data && data.stack.length > 0 && <p class="mono muted">Stack: {data.stack.join(' · ')}</p>}
+    <Tags tags={data.tags} />
+    <hr style="border-color: var(--border); margin: 2rem 0;" />
+    <slot />
+  </article>
+</Base>

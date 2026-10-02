@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { getAllEntries, getPublished, url } from '../lib';
+
+const all = await getAllEntries();
+const writeups = await getPublished('writeups');
+const projects = await getPublished('projects');
+const notes = await getPublished('notes');
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const recent = all.slice(0, 5);
+---
+<Base title="security-portfolio">
+  <section class="hero">
+    <canvas class="network" aria-hidden="true"></canvas>
+    <p class="prompt">&gt; <span data-typewriter="./start --career cybersecurity">./start --career cybersecurity</span><span class="cursor">_</span></p>
+    <h1>Hi, ich bin <span class="glitch" data-text="[Dein Name]">[Dein Name]</span>.</h1>
+    <p>
+      Ich baue mir gerade meinen Weg in die IT-Security auf. Hier dokumentiere ich,
+      was ich lerne: TryHackMe-Writeups, eigene Projekte aus meinem Homelab und
+      Notizen aus meiner Weiterbildung.
+    </p>
+    <div class="stats">
+      <div class="stat" data-reveal><strong data-count={writeups.length}>{writeups.length}</strong>Writeups</div>
+      <div class="stat" data-reveal><strong data-count={projects.length}>{projects.length}</strong>Projekte</div>
+      <div class="stat" data-reveal><strong data-count={notes.length}>{notes.length}</strong>Lernnotizen</div>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section>
+      <h2 data-reveal>Ausgewählte Projekte</h2>
+      <ul class="card-list">{featured.map((e) => <EntryCard entry={e} morph={false} />)}</ul>
+    </section>
+  )}
+
+  <section>
+    <h2 data-reveal>Zuletzt hinzugefügt</h2>
+    <ul class="card-list">{recent.map((e) => <EntryCard entry={e} showKind />)}</ul>
+    <p><a href={url('tags/')}>Alle Themen ansehen →</a></p>
+  </section>
+</Base>

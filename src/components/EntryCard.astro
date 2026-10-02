@@ -1,0 +1,22 @@
+---
+import Tags from './Tags.astro';
+import { entryUrl, formatDate, kindLabel, type AnyEntry } from '../lib';
+
+// morph: Titel „fliegt“ beim Seitenwechsel zur Detailseite. Pro Seite darf jeder Name nur einmal vorkommen.
+interface Props { entry: AnyEntry; showKind?: boolean; morph?: boolean }
+const { entry, showKind = false, morph = true } = Astro.props;
+const { data } = entry;
+---
+<li class="card" data-reveal>
+  <div class="meta">
+    <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+    {showKind && <span>{kindLabel[entry.collection]}</span>}
+    {'platform' in data && <span>{data.platform}</span>}
+    {'difficulty' in data && data.difficulty && <span>{data.difficulty}</span>}
+    {'status' in data && <span class={data.status === 'abgeschlossen' ? 'badge' : 'badge warn'}>{data.status}</span>}
+    {data.draft && <span class="badge warn">draft</span>}
+  </div>
+  <h3 transition:name={morph ? `title-${entry.collection}-${entry.id}` : undefined}><a href={entryUrl(entry)}>{data.title}</a></h3>
+  <p class="muted">{data.description}</p>
+  <Tags tags={data.tags} />
+</li>

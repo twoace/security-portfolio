@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getAllEntries, slugifyTag } from '../../lib';
+
+export const getStaticPaths = (async () => {
+  const all = await getAllEntries();
+  const byTag = new Map<string, { name: string; entries: typeof all }>();
+  for (const e of all) {
+    for (const t of e.data.tags) {
+      const slug = slugifyTag(t);
+      if (!byTag.has(slug)) byTag.set(slug, { name: t, entries: [] });
+      byTag.get(slug)!.entries.push(e);
+    }
+  }
+  return [...byTag].map(([tag, { name, entries }]) => ({ params: { tag }, props: { name, entries } }));
+}) satisfies GetStaticPaths;
+
+const { name, entries } = Astro.props;
+---
+<Base title={`#${name}`}>
+  <h1>#{name}</h1>
+  <ul class="card-list">{entries.map((e) => <EntryCard entry={e} showKind />)}</ul>
+</Base>
