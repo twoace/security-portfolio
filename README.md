@@ -1,66 +1,61 @@
 # security-portfolio
 
-Meine persönliche Website als Lern- und Projektbasis auf dem Weg in die Cybersecurity:
-**TryHackMe-Writeups**, **eigene Projekte** und **Lernnotizen** aus der Weiterbildung.
+Persönliches Portfolio und Lernjournal von **Aaron Hintze** auf dem Weg in die Cybersecurity.
 
-Gebaut mit [Astro](https://astro.build) als statische Seite, gehostet auf GitHub Pages.
-Inhalte sind einfache Markdown-Dateien.
+Hier dokumentiere ich, woran ich arbeite und was ich lerne:
 
-## Lokal starten
+- **Writeups** zu TryHackMe-Räumen und CTFs, jeweils mit Lösungsweg und Verteidigungssicht
+- **Projekte** aus meinem Homelab sowie eigene Skripte und Tools
+- **Lernnotizen** aus meiner Weiterbildung, aus Kursen und Fachliteratur
 
-```bash
-npm install
-npm run dev        # http://localhost:4321/security-portfolio/
-npm run build      # Typecheck + Build nach dist/
-```
+🔗 **Live:** https://twoace.github.io/security-portfolio/
 
-## Neuen Eintrag anlegen
+## Technik
 
-1. Passende Vorlage aus `templates/` kopieren:
-   - `writeup.md` → `src/content/writeups/<name>.md`
-   - `project.md` → `src/content/projects/<name>.md`
-   - `note.md` → `src/content/notes/<name>.md`
-2. Frontmatter ausfüllen. Mit `draft: true` ist der Eintrag nur lokal sichtbar.
-3. Bilder neben die Markdown-Datei legen und relativ einbinden: `![Scan](./scan.png)`.
-4. Commit & Push auf `main` → GitHub Actions baut und deployt automatisch.
+| Bereich | Umsetzung |
+|---|---|
+| Framework | [Astro](https://astro.build), statisch generiert, TypeScript im Strict-Modus |
+| Inhalte | Markdown mit typisiertem Frontmatter-Schema (Zod), das beim Build validiert wird |
+| Motion | View Transitions, Canvas-Animation, Scroll-Reveal, alles ohne externe Libraries |
+| Barrierefreiheit | `prefers-reduced-motion` wird respektiert, Inhalte bleiben ohne JavaScript lesbar |
+| CI/CD | GitHub Actions: Typecheck und Build bei jedem Push, Deployment auf GitHub Pages |
+| Extras | Tag-Übersicht, RSS-Feed, Sitemap |
 
-Das Schema in `src/content.config.ts` prüft beim Build jedes Feld. Ein Tippfehler im
-Frontmatter (z. B. `difficulty: easy` statt `Easy`) lässt den Build mit klarer Fehlermeldung scheitern.
+## Sicherheitsüberlegungen
+
+Ich habe die Seite bewusst schlank gehalten:
+
+- **Statisch statt dynamisch:** kein Backend, keine Datenbank, keine Formulare. Das hält die Angriffsfläche klein.
+- **Wenige Abhängigkeiten:** nur Astro und dessen offizielle Integrationen, kein clientseitiges Framework.
+- **Minimale CI-Rechte:** Der Workflow läuft mit `contents: read`. Schreibrechte für Pages gibt es nur im Deploy-Job.
+- **Externe Links** setzen `rel="noopener noreferrer"`, und die Seite verwendet eine restriktive Referrer-Policy.
+- **Writeups veröffentlichen keine Flags, Passwörter oder Hashes**, sondern den Lösungsweg und das Vorgehen.
 
 ## Struktur
 
 ```
 src/
-  content/          ← deine Inhalte (Markdown)
-    writeups/
-    projects/
-    notes/
-  content.config.ts ← Schema / Pflichtfelder pro Inhaltstyp
-  pages/            ← Routen (Startseite, Listen, Detailseiten, Tags, RSS)
-  layouts/          ← Seitengerüst
-  components/       ← Karten, Tags
-  styles/global.css ← Design (Farben oben als Variablen)
-templates/          ← Vorlagen für neue Einträge
+  content/            Writeups, Projekte und Notizen als Markdown
+  content.config.ts   Schema pro Inhaltstyp
+  pages/              Routen: Startseite, Listen, Detailseiten, Tags, RSS
+  layouts/            Seitengerüst
+  components/         wiederverwendbare UI-Bausteine
+  scripts/effects.ts  Client-Animationen
+  styles/global.css   Design-Tokens und Styles
+templates/            Vorlagen für neue Einträge
 ```
 
-## Einmalige Einrichtung (GitHub Pages)
+## Lokal ausführen
 
-1. Repo auf GitHub → **Settings → Pages → Source: GitHub Actions**.
-2. In `astro.config.mjs` `site` und `base` prüfen (für `https://twoace.github.io/security-portfolio/` passt es).
-3. Platzhalter ersetzen: `[Dein Name]` in `src/pages/index.astro`, Links in `src/pages/about.astro`.
+```bash
+npm install
+npm run dev     # Entwicklungsserver
+npm run build   # Typecheck und Produktions-Build
+```
 
-## Regeln für Writeups
+## Geplant
 
-- **Keine Flags, Passwörter oder Hashes im Klartext.** Zeig den Lösungsweg und dein Denken.
-- Keine echten IPs, keine Daten von der Arbeit oder aus Kundenumgebungen.
-- Immer ein Abschnitt **„Verteidigungssicht“**: Wie erkennt oder verhindert man das?
-- Auch Fehlversuche dokumentieren. Genau das zeigt Lernfähigkeit.
-
-## Roadmap (Ideen zum Mitwachsen)
-
-- [ ] Eigene Inhalte statt der drei Beispiel-Einträge
-- [ ] Eigene Domain + HTTPS (z. B. Cloudflare) und Security-Header (CSP, HSTS) setzen
-- [ ] Suche (z. B. [Pagefind](https://pagefind.app), funktioniert rein statisch)
-- [ ] Seite „Lernpfad“ / Timeline mit Zertifikaten und Meilensteinen
-- [ ] Secret-Scanning im CI (z. B. gitleaks), damit nie versehentlich Credentials im Repo landen
-- [ ] Eigene Seite selbst prüfen: securityheaders.com, Mozilla Observatory, Lighthouse
+- [ ] Volltextsuche mit [Pagefind](https://pagefind.app)
+- [ ] Eigene Domain mit Security-Headern (CSP, HSTS) und Prüfung über Mozilla Observatory
+- [ ] Secret-Scanning im CI (gitleaks)
+- [ ] Timeline mit Zertifikaten und Meilensteinen
