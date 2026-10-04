@@ -76,6 +76,7 @@ th, td { border: 1px solid var(--border); padding: .4rem .7rem; text-align: left
 .hero { padding: 1rem 0 2rem; }
 .hero .prompt { font-family: var(--mono); color: var(--accent); }
 .hero h1 { margin: .3rem 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .6rem .9rem; margin: 1.25rem 0 0; font-family: var(--mono); font-size: .9rem; }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; margin: 1.5rem 0; }
 .stat { border: 1px solid var(--border); border-radius: 8px; padding: .8rem 1rem; background: var(--bg-soft); }
@@ -166,6 +167,9 @@ nav a:hover::after, nav a[aria-current='page']::after { transform: scaleX(1); }
 .card:hover { border-color: #3fb95088; box-shadow: 0 8px 30px -12px #3fb95055; }
 .card:hover::before { opacity: 1; }
 .card[data-reveal].is-visible:hover, .card:not([data-reveal]):hover { transform: translateY(-3px); }
+
+.overview .card h3 { margin-top: 0; }
+.overview .card p { color: var(--muted); }
 
 .stat { transition: border-color .25s ease; }
 .stat:hover { border-color: var(--accent); }

@@ -1,17 +1,48 @@
 ---
 import Base from '../layouts/Base.astro';
+import { url } from '../lib';
 ---
-<Base title="Über mich" description="Wer ich bin, was ich lerne und wohin ich will.">
+<Base title="Über mich" description="Aaron Hintze: Weg in die Cybersecurity, aktueller Fokus, Skills und wie ich lerne.">
   <h1>Über mich</h1>
   <p>
-    Ich bin Aaron und orientiere mich beruflich in Richtung Cybersecurity.
+    Ich bin Aaron und stelle gerade mein berufliches Profil auf Cybersecurity um. Diese Seite
+    ist der Ort, an dem ich das sichtbar mache.
   </p>
+  <p>
+    Praktisch heißt das: Labs auf TryHackMe, ein wachsendes Homelab und ab
+    2027/28 die IHK-Weiterbildung zum Geprüften Berufsspezialisten IT
+    Informationssicherheit. Ich schreibe gelerntes auf, als eine Art Lern-Tagebuch und damit
+    ich es später wiederfinde.
+  </p>
+
+  <h2>Wie ich lerne</h2>
+  <p>
+    Ich lerne am liebsten an praktischen Übungen, die mich vor Herausforderungen stellen. Ein Raum
+    oder ein Lab ist erst fertig, wenn ich den Ablauf in eigenen Worten erklären
+    kann: Was habe ich gesehen, welche Hypothese hatte ich, was hat funktioniert,
+    und wie würde ich das als Verteidiger merken? Und das wichtigste: Wo kam ich nicht weiter? Wo habe ich Fehler gemacht?
+  </p>
+  <ul>
+    <li><strong>Labs zuerst:</strong> TryHackMe-Pfade als Leitplanke, plus eigene Versuche im Homelab.</li>
+    <li><strong>Danach dokumentieren:</strong> <a href={url('notes/')}>Notizen</a> für Konzepte, <a href={url('writeups/')}>Writeups</a> für komplette Räume.</li>
+    <li><strong>Offense und Defense zusammen:</strong> Ausnutzung üben, aber immer mit der Frage nach Logging, Detection und Härtung.</li>
+    <li><strong>Keine secrets veröffentlichen:</strong> keine Flags, keine Passwörter, keine Hashes, keine Zugangsdaten.</li>
+  </ul>
 
   <h2>Aktueller Fokus</h2>
   <ul>
-    <li>TryHackMe: Lernpfade <em>Cyber Security 101</em> → <em>SOC Level 1</em> → <em>Jr Penetration Tester</em></li>
-    <li>Weiterbildung 2027/28: Geprüfter Berufsspezialist IT Informationssicherheit (IHK)</li>
-    <li>Homelab: Netzwerk-Segmentierung, Logging, Detection</li>
+    <li>
+      TryHackMe in dieser Reihenfolge:
+      <em>Cyber Security 101</em> → <em>SOC Level 1</em> → <em>Jr Penetration Tester</em>.
+      Grundlagen: Netzwerke, Linux, Enumeration, typische Web-Angriffe.
+    </li>
+    <li>
+      Homelab: getrennte Netze, Logging und erste Detection.
+    </li>
+    <li>
+      Weiterbildung 2027/28: Geprüfter Berufsspezialist IT Informationssicherheit (IHK).
+      Die Notizen hier sollen später auch als Begleitmaterial dafür taugen.
+    </li>
   </ul>
 
   <h2>Skills</h2>
@@ -21,16 +52,29 @@ import Base from '../layouts/Base.astro';
       <tr><td>Linux / Bash</td><td>Grundlagen</td></tr>
       <tr><td>Netzwerke (TCP/IP, DNS, HTTP)</td><td>Grundlagen</td></tr>
       <tr><td>Python-Scripting</td><td>Fortgeschritten</td></tr>
-      <tr><td>Web-Security (OWASP Top 10)</td><td>lerne ich gerade</td></tr>
+      <tr><td>Web-Security (OWASP Top 10, Enumeration, SQLi)</td><td>lerne ich gerade</td></tr>
+      <tr><td>Reconnaissance (Nmap, OSINT)</td><td>lerne ich gerade</td></tr>
+      <tr><td>Passwort-Angriffe &amp; Hashes</td><td>lerne ich gerade</td></tr>
+      <tr><td>Linux Privilege Escalation</td><td>lerne ich gerade</td></tr>
+      <tr><td>Detection / Logging im Homelab</td><td>erste Versuche</td></tr>
     </tbody>
   </table>
 
   <h2>Zertifikate &amp; Meilensteine</h2>
+  <p>
+    Noch keine abgeschlossenen Security-Zertifikate. Was ich mir vorgenommen habe:
+  </p>
   <ul>
-    <li></li>
+    <li><strong>Jetzt:</strong> TryHackMe-Pfade abschließen und die Räume als Writeups dokumentieren.</li>
+    <li><strong>Parallel:</strong> Homelab als eigene Testumgebung aufbauen.</li>
+    <li><strong>2027/28:</strong> IHK-Weiterbildung IT-Informationssicherheit.</li>
   </ul>
 
   <h2>Kontakt</h2>
+  <p>
+    Wenn du Feedback zu einem Writeup hast, oder
+    einfach sehen möchtest, woran ich übe:
+  </p>
   <p>
     <a href="https://github.com/twoace" rel="noopener noreferrer">GitHub</a> ·
     <a href="https://tryhackme.com/p/gakusei0" rel="noopener noreferrer">TryHackMe</a>

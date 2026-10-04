@@ -10,15 +10,23 @@ const notes = await getPublished('notes');
 const featured = projects.filter((p) => p.data.featured).slice(0, 3);
 const recent = all.slice(0, 5);
 ---
-<Base title="security-portfolio">
+<Base
+  title="security-portfolio"
+  description="Aaron Hintze dokumentiert den Weg in die Cybersecurity: TryHackMe-Writeups, Homelab-Projekte und Lernnotizen."
+>
   <section class="hero">
     <canvas class="network" aria-hidden="true"></canvas>
     <p class="prompt">&gt; <span data-typewriter="./start --career cybersecurity">./start --career cybersecurity</span><span class="cursor">_</span></p>
     <h1>Hi, ich bin <span class="glitch" data-text="Aaron Hintze">Aaron Hintze</span>.</h1>
     <p>
-      Ich baue mir gerade meinen Weg in die IT-Security auf. Hier dokumentiere ich,
-      was ich lerne: TryHackMe-Writeups, eigene Projekte aus meinem Homelab und
-      Notizen aus meiner Weiterbildung.
+      Ich baue mir gerade meinen Weg in die IT-Security auf: von den Grundlagen
+      über Blue-Team-Themen bis hin zu Junior-Pentesting. Diese Seite ist mein
+      öffentliches Lernjournal, kein fertiges Experten-Portfolio.
+    </p>
+    <p class="muted">
+      Ich schreibe auf, was ich wirklich verstanden habe: TryHackMe-Räume mit
+      Lösungsweg und Verteidigungssicht, Projekte aus meinem Homelab und
+      Notizen aus Kursen und der geplanten IHK-Weiterbildung.
     </p>
     <div class="stats">
       <div class="stat" data-reveal><strong data-count={writeups.length}>{writeups.length}</strong>Writeups</div>
@@ -36,7 +44,11 @@ const recent = all.slice(0, 5);
 
   <section>
     <h2 data-reveal>Zuletzt hinzugefügt</h2>
-    <ul class="card-list">{recent.map((e) => <EntryCard entry={e} showKind />)}</ul>
+    {recent.length === 0 ? (
+      <p class="muted">Noch keine veröffentlichten Einträge. Als Nächstes kommen Notizen und Writeups aus den TryHackMe-Pfaden.</p>
+    ) : (
+      <ul class="card-list">{recent.map((e) => <EntryCard entry={e} showKind />)}</ul>
+    )}
     <p><a href={url('tags/')}>Alle Themen ansehen →</a></p>
   </section>
 </Base>
